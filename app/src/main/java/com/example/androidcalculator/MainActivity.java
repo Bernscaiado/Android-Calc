@@ -7,7 +7,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    ScriptEngine engine;
 
     Button btn1;
     Button btn2;
@@ -26,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnMult;
     Button btnDiv;
     Button btnDot;
+    Button btnEqual;
 
     TextView text_display;
 
@@ -33,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        engine = new ScriptEngineManager().getEngineByName("rhino");
 
         btn1 = (Button) findViewById(R.id.button1);
         btn2 = (Button) findViewById(R.id.button2);
@@ -52,177 +60,97 @@ public class MainActivity extends AppCompatActivity {
         btnMult = (Button) findViewById(R.id.button12);
         btnDot= (Button) findViewById(R.id.button15);
         btnDiv= (Button) findViewById(R.id.button16);
-
-
-
-
-
+        btnEqual = (Button) findViewById(R.id.button17);
 
 
         text_display = (TextView) findViewById(R.id.textView);
 
-        btn1.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        text_display.setText(text_display.getText()+"1");
 
-                    }
-                }
-        );
+        btn1.setOnClickListener(this);
+        btn2.setOnClickListener(this);
+        btn3.setOnClickListener(this);
+        btn4.setOnClickListener(this);
+        btn5.setOnClickListener(this);
+        btn6.setOnClickListener(this);
+        btn7.setOnClickListener(this);
+        btn8.setOnClickListener(this);
+        btn9.setOnClickListener(this);
+        btn0.setOnClickListener(this);
 
-        btn2.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        text_display.setText(text_display.getText()+"2");
+        btnC.setOnClickListener(this);
+        btnEqual.setOnClickListener(this);
 
-                    }
-                }
-        );
-
-        btn3.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        text_display.setText(text_display.getText()+"3");
-
-                    }
-                }
-        );
-
-        btn4.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        text_display.setText(text_display.getText()+"4");
-
-                    }
-                }
-        );
-
-        btn5.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        text_display.setText(text_display.getText()+"5");
-
-                    }
-                }
-        );
-
-        btn6.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        text_display.setText(text_display.getText()+"6");
-
-                    }
-                }
-        );
-
-        btn7.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        text_display.setText(text_display.getText()+"7");
-
-                    }
-                }
-        );
-
-        btn8.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        text_display.setText(text_display.getText()+"8");
-
-                    }
-                }
-        );
-
-        btn9.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        text_display.setText(text_display.getText()+"9");
-
-                    }
-                }
-        );
-
-        btn0.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        text_display.setText(text_display.getText()+"0");
-
-                    }
-                }
-        );
-
-        btnPlus.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        text_display.setText(text_display.getText()+"+");
-
-                    }
-                }
-        );
-
-        btnMinus.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        text_display.setText(text_display.getText()+"-");
-
-                    }
-                }
-        );
-
-        btnC.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        text_display.setText("");
-
-                    }
-                }
-        );
-
-        btnMult.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        text_display.setText(text_display.getText()+"*");
-
-                    }
-                }
-        );
-
-        btnDiv.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        text_display.setText(text_display.getText()+"/");
-
-                    }
-                }
-        );
-
-        btnDot.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        text_display.setText(text_display.getText()+".");
-
-                    }
-                }
-        );
+        btnPlus.setOnClickListener(this);
+        btnMinus.setOnClickListener(this);
+        btnMult.setOnClickListener(this);
+        btnDot.setOnClickListener(this);
+        btnDiv.setOnClickListener(this);
 
 
+    }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
 
+            case R.id.button14:
+                addNumber("0");
+                break;
+            case R.id.button1:
+                addNumber("1");
+                break;
+            case R.id.button2:
+                addNumber("2");
+                break;
+            case R.id.button3:
+                addNumber("3");
+                break;
+            case R.id.button5:
+                addNumber("4");
+                break;
+            case R.id.button6:
+                addNumber("5");
+                break;
+            case R.id.button7:
+                addNumber("6");
+                break;
+            case R.id.button9:
+                addNumber("7");
+                break;
+            case R.id.button10:
+                addNumber("8");
+                break;
+            case R.id.button11:
+                addNumber("9");
+                break;
+            case R.id.button4:
+                addNumber("+");
+                break;
+            case R.id.button8:
+                addNumber("-");
+                break;
+            case R.id.button16:
+                addNumber("/");
+                break;
+            case R.id.button12:
+                addNumber("*");
+                break;
+            case R.id.button13:
+                clear_display();
+                break;
+            case R.id.button15:
+                addNumber(".");
+                break;
+
+        }
+
+    }
+
+    private void addNumber(String number) {
+        text_display.setText(text_display.getText()+number);
+    }
+
+    private void clear_display() {
+        text_display.setText("");
     }
 }
