@@ -201,11 +201,12 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="399dp"
-        android:layout_height="149dp"
-        android:text="TextView"
+        android:layout_width="410dp"
+        android:layout_height="74dp"
         android:gravity="right"
+        android:hint="Enter Value"
         android:visibility="visible"
+        android:textSize="50sp"
         app:layout_constraintBottom_toTopOf="@+id/tableLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
