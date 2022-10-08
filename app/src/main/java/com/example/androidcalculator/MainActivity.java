@@ -7,8 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
+
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -141,9 +144,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button15:
                 addNumber(".");
                 break;
-
+            case R.id.button17:
+                String result = null;
+                try {
+                    result = evaluate(text_display.getText().toString());
+                    text_display.setText(result);
+                } catch (ScriptException e) {
+                    text_display.setText("ERROR");
+                }
         }
 
+    }
+
+    private String evaluate(String expression) throws ScriptException {
+        String result = engine.eval(expression).toString();
+        BigDecimal decimal = new BigDecimal(result);
+        return decimal.setScale(2,BigDecimal.ROUND_HALF_UP).toPlainString();
     }
 
     private void addNumber(String number) {
