@@ -15,7 +15,7 @@ import javax.script.ScriptException;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    ScriptEngine engine;
+    Evaluator evaluator;
 
     Button btn1;
     Button btn2;
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        engine = new ScriptEngineManager().getEngineByName("rhino");
+        evaluator = new Evaluator();
 
         btn1 = (Button) findViewById(R.id.button1);
         btn2 = (Button) findViewById(R.id.button2);
@@ -157,8 +157,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private String evaluate(String expression) throws ScriptException {
-        String result = engine.eval(expression).toString();
-        BigDecimal decimal = new BigDecimal(result);
+        BigDecimal decimal = evaluator.evaluate(expression);
         return decimal.setScale(2,BigDecimal.ROUND_HALF_UP).toPlainString();
     }
 
